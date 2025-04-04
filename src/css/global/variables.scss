@@ -1,0 +1,31 @@
+/* fonts */
+$font-main: "ProximaNova", Arial, sans-serif;
+
+/* media-widths */
+$desktop-max-width: 1920px;
+$desktop-mid-width: 1440px;
+$desktop-min-width: 1025px;
+$tablet-max-width: 1024px;
+$tablet-min-width: 768px;
+$mobile-max-width: 767px;
+$mobile-mid-width: 480px;
+$mobile-min-width: 320px;
+
+/* colors */
+$colorBlack: #000000;
+$colorBlackTwo: #111111;
+$colorBlackThree: #333333;
+$colorGray: #757575;
+$colorGrayTwo: #fafafa;
+$colorGrayThree: #d1d1d9;
+$colorGrayFour: #dddddd;
+$colorGrayFive: #e8e8e8;
+$colorGraySix: #e6e6e6;
+$colorGraySeven: #f5f5f5;
+$colorWhite: #ffffff;
+$colorRed: #ff2e17;
+
+/* shadows */
+$boxShadowSection: inset 0 3px 4px 0 rgba(0, 0, 0, 0.1);
+$boxShadowCard: 0px 1px 4px 0px rgba(0, 0, 0, 0.1);
+$boxShadowCardHover: 0 4px 8px 0px rgba(0, 0, 0, 0.1);

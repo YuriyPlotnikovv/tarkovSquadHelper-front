@@ -1,0 +1,47 @@
+@use "../global/variables" as var;
+
+.footer {
+  &__wrapper {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 50px;
+    box-sizing: border-box;
+    max-width: var.$desktop-mid-width;
+    margin: 0 auto;
+    padding: 10px 100px;
+
+    @media (max-width: var.$desktop-mid-width) {
+      padding: 10px 80px;
+    }
+    @media (max-width: var.$tablet-max-width) {
+      padding: 10px 40px;
+    }
+    @media (max-width: var.$mobile-max-width) {
+      padding: 10px 20px;
+    }
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__info-text {
+    font-size: 18px;
+
+    @media (max-width: var.$tablet-max-width) {
+      font-size: 16px;
+    }
+    @media (max-width: var.$mobile-mid-width) {
+      font-size: 14px;
+    }
+  }
+
+  &__info-icon {
+    width: 30px;
+    height: 30px;
+    fill: var.$colorWhite;
+  }
+}

@@ -1,0 +1,66 @@
+@use "../global/variables" as var;
+
+.weapon {
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-height: 65px;
+    padding: 10px;
+
+    color: var.$colorBlack;
+
+    background-color: var.$colorWhite;
+    border-radius: 5px;
+
+    @media (max-width: var.$tablet-max-width) {
+      flex-direction: column;
+    }
+  }
+
+  &__item-name {
+    font-size: 16px;
+  }
+
+  &__item-price {
+    font-size: 16px;
+    text-wrap: nowrap;
+  }
+
+  &__item-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  &__item-parameters {
+    display: flex;
+    gap: 20px;
+    margin-left: auto;
+
+    @media (max-width: var.$tablet-max-width) {
+      flex-direction: column;
+      align-items: center;
+      margin-left: unset;
+    }
+  }
+
+  &__item-count {
+    display: flex;
+    gap: 20px;
+    margin-left: auto;
+
+    .form__input {
+      width: 100px;
+      padding: 5px;
+
+      font-weight: 700;
+      text-align: center;
+    }
+  }
+
+  &__item-button {
+    width: 150px;
+    padding: 10px;
+  }
+}

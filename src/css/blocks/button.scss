@@ -1,0 +1,73 @@
+@use "../global/variables" as var;
+
+.button {
+  display: flex;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  width: max-content;
+
+  font-size: 18px;
+  font-weight: 500;
+
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+
+  @media (max-width: var.$tablet-max-width) {
+    font-size: 16px;
+  }
+  @media (max-width: var.$mobile-mid-width) {
+    font-size: 14px;
+  }
+
+  &--default {
+    width: 100%;
+    padding: 15px 30px;
+
+    color: var.$colorWhite;
+
+    background-color: var.$colorBlackThree;
+    border: 1px solid var.$colorBlackThree;
+    border-radius: 4px;
+
+    transition: all 0.4s ease-in-out;
+
+    &:hover, &:active {
+      color: var.$colorBlackThree;
+
+      background-color: transparent;
+    }
+  }
+
+  &--on-dark-bg {
+    width: 100%;
+    padding: 15px 30px;
+
+    color: var.$colorWhite;
+
+    background-color: var.$colorBlackThree;
+    border: 1px solid var.$colorBlackThree;
+    border-radius: 4px;
+
+    transition: all 0.4s ease-in-out;
+
+    &:hover, &:active {
+      background-color: transparent;
+      border-color: var.$colorWhite;
+    }
+  }
+
+  &--count {
+    width: 40px;
+    height: 40px;
+
+    font-size: 26px;
+
+    background-color: var.$colorGraySix;
+    border-radius: 50%;
+
+    &:hover, &:active {
+      background-color: var.$colorGrayThree;
+    }
+  }
+}

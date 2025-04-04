@@ -1,0 +1,8 @@
+@use "../global/variables" as var;
+
+.link {
+  transition: all 0.4s ease-in-out;
+  &:hover, &:active {
+    opacity: 0.6;
+  }
+}

@@ -1,0 +1,211 @@
+@use "../global/variables" as var;
+
+.page {
+  &__body {
+    position: relative;
+
+    height: 100%;
+
+    font-family: "ProximaNova", "Helvetica", "Arial", sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.2;
+
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/public/img/background.webp");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+  }
+
+  &__header {
+    z-index: 4;
+
+    width: 100%;
+
+    color: var.$colorWhite;
+
+    background-color: var.$colorBlackTwo;
+  }
+
+  &__main {
+    z-index: 3;
+
+    display: flex;
+    flex-direction: column;
+    padding: 80px 0;
+
+    @media (max-width: var.$tablet-max-width) {
+      padding: 60px 0;
+    }
+    @media (max-width: var.$mobile-mid-width) {
+      padding: 40px 0;
+    }
+  }
+
+  &__wrapper {
+    position: relative;
+
+    width: 100%;
+    max-width: var.$desktop-mid-width;
+    height: 100%;
+    margin: 0 auto;
+    padding: 30px 100px 70px;
+
+    @media (max-width: var.$desktop-mid-width) {
+      padding: 30px 80px 70px;
+    }
+    @media (max-width: var.$tablet-max-width) {
+      padding: 30px 40px 70px;
+    }
+    @media (max-width: var.$mobile-max-width) {
+      padding: 20px 20px 40px;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+  }
+
+  &__title {
+    font-size: 48px;
+    font-weight: 500;
+
+    @media (max-width: var.$tablet-max-width) {
+      font-size: 36px;
+    }
+    @media (max-width: var.$mobile-mid-width) {
+      font-size: 24px;
+    }
+  }
+
+  &__text {
+    font-size: 22px;
+
+    @media (max-width: var.$tablet-max-width) {
+      font-size: 20px;
+    }
+    @media (max-width: var.$mobile-mid-width) {
+      font-size: 18px;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+
+    @media (max-width: var.$tablet-max-width) {
+      gap: 40px;
+    }
+    @media (max-width: var.$mobile-mid-width) {
+      gap: 30px;
+    }
+  }
+
+  &__info-form {
+
+    @media (max-width: var.$tablet-max-width) {
+      flex-direction: column;
+      align-items: start;
+    }
+  }
+
+  &__project-link {
+    display: block;
+
+    font-size: 24px;
+    font-weight: 500;
+    font-style: italic;
+
+    @media (max-width: var.$tablet-max-width) {
+      font-size: 22px;
+    }
+    @media (max-width: var.$mobile-mid-width) {
+      font-size: 18px;
+    }
+  }
+
+  &__search {
+
+  }
+
+  &__search-form {
+    position: relative;
+
+    @media (max-width: var.$tablet-max-width) {
+      flex-direction: column;
+      align-items: start;
+    }
+
+    .form__input {
+      width: 100%;
+    }
+  }
+
+  &__search-results {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    left: 0;
+
+    display: flex;
+    overflow-y: auto;
+    flex-direction: column;
+    width: 100%;
+    max-height: 400px;
+    padding: 20px;
+
+    background-color: var.$colorWhite;
+    border-radius: 5px;
+  }
+
+  &__search-results-item {
+    display: block;
+    padding: 10px;
+
+    color: var.$colorBlack;
+
+    cursor: pointer;
+
+    transition: all 0.4s ease-in-out;
+
+    &:hover {
+      background-color: var.$colorGrayFive;
+    }
+
+    &:active {
+      opacity: 0.6;
+      background-color: var.$colorGrayThree;
+    }
+
+    &--empty {
+      cursor: initial;
+      user-select: none;
+
+      &:hover, &:active {
+        opacity: 1;
+        background-color: unset;
+      }
+    }
+  }
+
+  &__info-players-list {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    width: 100%;
+  }
+
+  &__footer {
+    z-index: 3;
+
+    margin: auto 0 0;
+
+    color: var.$colorWhite;
+
+    background-color: var.$colorBlackTwo;
+  }
+}

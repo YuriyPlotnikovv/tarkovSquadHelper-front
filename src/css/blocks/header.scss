@@ -1,0 +1,61 @@
+@use "../global/variables" as var;
+
+.header {
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 50px;
+    box-sizing: border-box;
+    max-width: var.$desktop-mid-width;
+    margin: 0 auto;
+    padding: 10px 100px;
+
+    @media (max-width: var.$desktop-mid-width) {
+      gap: 30px;
+      padding: 10px 80px;
+    }
+    @media (max-width: var.$tablet-max-width) {
+      padding: 10px 40px;
+    }
+    @media (max-width: var.$mobile-max-width) {
+      padding: 10px 20px;
+    }
+  }
+
+  &__logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-right: auto;
+  }
+
+  &__logo-image {
+    width: 150px;
+    height: 60px;
+
+    fill: var.$colorWhite;
+
+    @media (max-width: var.$tablet-max-width) {
+      width: 120px;
+      height: 50px;
+    }
+    @media (max-width: var.$mobile-mid-width) {
+      width: 90px;
+      height: 40px;
+    }
+  }
+
+  &__logo-text {
+    font-size: 28px;
+    font-weight: 500;
+
+    @media (max-width: var.$tablet-max-width) {
+      font-size: 22px;
+    }
+    @media (max-width: var.$mobile-mid-width) {
+      font-size: 18px;
+    }
+  }
+}

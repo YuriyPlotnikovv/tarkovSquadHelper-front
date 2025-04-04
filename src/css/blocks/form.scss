@@ -1,0 +1,45 @@
+@use "../global/variables" as var;
+
+.form {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+
+  &__label {
+    display: block;
+    width: max-content;
+
+    font-size: 18px;
+    text-wrap: nowrap;
+
+    @media (max-width: var.$tablet-max-width) {
+      font-size: 16px;
+    }
+    @media (max-width: var.$mobile-mid-width) {
+      font-size: 14px;
+    }
+  }
+
+  &__input {
+    display: flex;
+    padding: 15px 30px;
+
+    font-size: 16px;
+
+    background-color: var.$colorWhite;
+    border: none;
+
+    border-radius: 5px;
+
+    @media (max-width: var.$tablet-max-width) {
+      font-size: 14px;
+    }
+    @media (max-width: var.$mobile-mid-width) {
+      font-size: 12px;
+    }
+
+    &--enter {
+      width: 100%;
+    }
+  }
+}

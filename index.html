@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html class="page" lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <title>Tarkov Squad Helper</title>
+    <meta name="description" content="Описание">
+    <meta name="keywords" content="Ключевые слова">
+
+    <link rel="preload" href="/public/fonts/ProximaNova-Bold.woff2" as="font"
+          type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="/public/fonts/ProximaNova-Light.woff2" as="font"
+          type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="/public/fonts/ProximaNova-LightIt.woff2" as="font"
+          type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="/public/fonts/ProximaNovaCond-Black.woff2" as="font"
+          type="font/woff2" crossorigin="anonymous">
+
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/favicon.ico">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="application-name" content="Tarkov Squad Helper">
+
+    <link href="/public/css/style.min.css" rel="stylesheet">
+</head>
+
+<body class="page__body">
+<header class="page__header header">
+    <div class="header__wrapper">
+        <div class="header__logo">
+            <svg class="header__logo-image" xmlns="http://www.w3.org/2000/svg">
+                <use xlink:href="/public/img/sprite.svg#logo"/>
+            </svg>
+
+            <span class="header__logo-text">Tarkov Squad Helper</span>
+        </div>
+    </div>
+</header>
+
+<main class="page__main main">
+    <div class="page__wrapper" id="app">
+        <!-- Главная страница -->
+        <transition name="fade" mode="out-in">
+            <div class="page__content" v-if="!isInRoom">
+                <h1 class="page__title">Добро пожаловать!</h1>
+
+                <p class="page__text">Введите ID комнаты или оставьте пустым для создания новой</p>
+
+                <section class="page__info">
+                    <form class="page__info-form form" @submit.prevent="handleRoomEntry">
+                        <label class="form__label" for="login">Комната:</label>
+
+                        <input class="form__input form__input--enter" type="text" name="login" id="login"
+                               v-model="roomIdInput"
+                               placeholder="Идентификатор комнаты...">
+
+                        <button class="form__button button button--on-dark-bg" type="submit">Войти</button>
+                    </form>
+                </section>
+            </div>
+        </transition>
+
+        <!-- Форма для ввода никнейма -->
+        <transition name="fade" mode="out-in">
+            <div class="page__content" v-if="isInRoom && showNicknameForm">
+                <h1 class="page__title">Комната #{{roomId}}</h1>
+
+                <p class="page__text">Для присоединения к комнате введите свой ник в игре или любое другое имя</p>
+
+                <section class="page__info">
+                    <form class="page__info-form form" @submit.prevent="submitNickname">
+                        <label class="form__label" for="nickname">Ник:</label>
+
+                        <input class="form__input form__input--enter" type="text" name="nickname"
+                               id="nickname"
+                               v-model="nickname" placeholder="Введите ваш ник в игре">
+
+                        <button class="form__button button button--on-dark-bg" type="submit">Подтвердить</button>
+                    </form>
+                </section>
+            </div>
+        </transition>
+
+        <!-- Обновление предметов в БД -->
+        <transition name="fade" mode="out-in">
+            <div class="page__content" v-if="isInRoom && !showNicknameForm && isUpdating">
+                <h1 class="page__title">Обновление списка предметов в базе данных, это займет несколько секунд...</h1>
+            </div>
+        </transition>
+
+        <!-- Комната -->
+        <transition name="fade" mode="out-in">
+            <div class="page__content" v-if="isInRoom && !showNicknameForm && !isUpdating">
+                <h1 class="page__title">Комната #{{roomId}}</h1>
+
+                <p class="page__text">Вы можете пригласить других участников в комнату по ссылке ниже:</p>
+
+                <button class="page__button-invite button button--on-dark-bg" type="button" @click="copyInviteLink">
+                    {{ inviteButtonText }}
+                </button>
+
+                <!-- Поиск -->
+                <section class="page__search">
+                    <h2 class="visually-hidden">Поиск</h2>
+
+                    <form class="page__search-form form" @submit.prevent="submitSearch">
+                        <label class="form__label" for="search">Поиск предметов:</label>
+
+                        <input class="form__input" type="text" name="search" id="search" v-model="searchQuery"
+                               @input="handleSearchInput"
+                               placeholder="Начните вводить название предмета...">
+
+                        <ul class="page__search-results" v-show="showSearchResults">
+                            <li class="page__search-results-item"
+                                v-for="item in searchResults"
+                                :key="item.id"
+                                @click="addItemToRoom(item)">
+                                {{ item.name }}
+                            </li>
+
+                            <li class="page__search-results-item page__search-results-item--empty"
+                                v-if="searchResults.length === 0">
+                                Ничего не найдено
+                            </li>
+                        </ul>
+                    </form>
+                </section>
+
+                <!-- Список предметов -->
+                <section class="page__info">
+                    <h2 class="visually-hidden">Список предметов игроков</h2>
+
+                    <ul class="page__info-players-list players" v-if="playersList && playersList.length > 0">
+                        <li class="players__item" v-for="player in playersList" :key="player.nickname">
+                            <h3 class="players__item-title">{{player.nickname}}</h3>
+
+                            <ul class="players__item-list weapon">
+                                <li class="weapon__item" v-for="item in player.items" :key="item.id">
+                                    <h4 class="weapon__item-name">
+                                        <a class="weapon__item-link" :href="item.link" target="_blank">{{item.name}}</a>
+                                    </h4>
+
+                                    <p class="weapon__item-price">
+                                        Цена: {{item.price}} ₽
+                                    </p>
+
+                                    <div class="weapon__item-parameters" v-if="player.nickname === nickname">
+                                        <div class="weapon__item-count">
+                                        <button class="form__button button button--count" type="button"
+                                                @click="decreaseItemCount(item)">-
+                                        </button>
+
+                                        <label class="visually-hidden" for="count">Количество:</label>
+
+                                        <input class="form__input form__input--on-light-bg" type="number" name="count"
+                                               id="count" v-model="item.count" readonly>
+
+                                        <button class="form__button button button--count" type="button"
+                                                @click="increaseItemCount(item)">+
+                                        </button>
+                                        </div>
+
+                                        <button class="weapon__item-button button button--default" type="button"
+                                                @click="removeItemFromRoom(item)">Удалить
+                                        </button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+        </transition>
+    </div>
+</main>
+
+<footer class="page__footer footer">
+    <div class="footer__wrapper">
+        <a class="footer__info link" href="https://github.com/andreyMalyshkin/andreyMalyshkin" target="_blank"
+           title="GitHub - andreyMalyshkin">
+            <svg class="footer__info-icon" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+                <use xlink:href="/public/img/sprite.svg#icon-developer-backend"/>
+            </svg>
+
+            <p class="footer__info-text">Andrey Malyshkin</p>
+        </a>
+
+        <a class="footer__info link" href="https://github.com/andreyMalyshkin/TarkovSquadHelper">
+            Проект на GitHub
+        </a>
+
+        <a class="footer__info link" href="https://yuriyplotnikovv.ru/" target="_blank"
+           title="Website - YuriyPlotnikovv">
+            <svg class="footer__info-icon" xmlns="http://www.w3.org/2000/svg">
+                <use xlink:href="/public/img/sprite.svg#icon-developer-frontend"/>
+            </svg>
+
+            <p class="footer__info-text">Yuriy Plotnikov</p>
+        </a>
+    </div>
+</footer>
+
+<script src="/public/js/vendor/vue.min.js"></script>
+<script src="/public/js/script.min.js"></script>
+</body>
+</html>
