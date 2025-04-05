@@ -2,7 +2,6 @@ new Vue({
   el: '#app',
   data: {
     roomIdInput: '',
-    isUpdating: false,
     searchQuery: '',
     searchResults: [],
     showSearchResults: false,
@@ -30,7 +29,7 @@ new Vue({
         if (urlRoomId) {
           this.enterRoom(urlRoomId);
         } else if (this.roomId) {
-          this.updateAndFetchItems();
+          this.fetchItems();
         }
       })
       .catch(error => {
@@ -74,29 +73,15 @@ new Vue({
       this.isInRoom = true;
       if (this.nickname) {
         this.showNicknameForm = false;
-        this.updateAndFetchItems();
+        this.fetchItems();
       }
     },
     submitNickname() {
       if (this.nickname.trim() !== '') {
         setCookie('nickname', this.nickname, 7);
         this.showNicknameForm = false;
-        this.updateAndFetchItems();
+        this.fetchItems();
       }
-    },
-    updateAndFetchItems() {
-      const updateUrl = `${this.apiBaseUrl}/update`;
-      this.isUpdating = true;
-      fetch(updateUrl, {
-        method: 'GET',
-      })
-        .then(() => {
-          this.fetchItems();
-          this.isUpdating = false;
-        })
-        .catch(error => {
-          console.error('Ошибка обновления списка предметов:', error);
-        });
     },
     fetchItems() {
       const itemsUrl = `${this.apiBaseUrl}/getitemsFromCollection?tableName=${this.roomId}`;
@@ -151,16 +136,17 @@ new Vue({
         body: JSON.stringify({
           tableName: this.roomId,
           item: {
-            id: item.id,
+            key: item.key,
             name: item.name,
             price: item.price,
+            link: item.link,
             count: 1,
             nickName: this.nickname
           }
         }),
       })
         .then(response => response.json())
-        .then((response) => {
+        .then(() => {
           this.showSearchResults = false;
           this.searchQuery = '';
           this.fetchItems();
@@ -176,7 +162,7 @@ new Vue({
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
           tableName: this.roomId,
-          item: { id: item.id, nickName: item.nickName },
+          item: { key: item.key, nickName: item.nickName },
           amount: 1
         }),
       })
@@ -192,7 +178,7 @@ new Vue({
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
           tableName: this.roomId,
-          item: { id: item.id, nickName: item.nickName },
+          item: { key: item.key, nickName: item.nickName },
           amount: 1
         }),
       })
@@ -208,13 +194,13 @@ new Vue({
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
           tableName: this.roomId,
-          item: { id: item.id, nickName: item.nickName }
+          item: { key: item.key, nickName: item.nickName }
         }),
       })
         .then(response => response.json())
         .then(() => {
           const player = this.playersList.find(player => player.nickname === item.nickName);
-          player.items = player.items.filter(playerItem => playerItem.id !== item.id);
+          player.items = player.items.filter(playerItem => playerItem.key !== item.key);
         });
     },
     handleClickOutside(event) {

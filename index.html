@@ -83,16 +83,9 @@
             </div>
         </transition>
 
-        <!-- Обновление предметов в БД -->
-        <transition name="fade" mode="out-in">
-            <div class="page__content" v-if="isInRoom && !showNicknameForm && isUpdating">
-                <h1 class="page__title">Обновление списка предметов в базе данных, это займет несколько секунд...</h1>
-            </div>
-        </transition>
-
         <!-- Комната -->
         <transition name="fade" mode="out-in">
-            <div class="page__content" v-if="isInRoom && !showNicknameForm && !isUpdating">
+            <div class="page__content" v-if="isInRoom && !showNicknameForm">
                 <h1 class="page__title">Комната #{{roomId}}</h1>
 
                 <p class="page__text">Вы можете пригласить других участников в комнату по ссылке ниже:</p>
@@ -112,19 +105,21 @@
                                @input="handleSearchInput"
                                placeholder="Начните вводить название предмета...">
 
-                        <ul class="page__search-results" v-show="showSearchResults">
-                            <li class="page__search-results-item"
-                                v-for="item in searchResults"
-                                :key="item.id"
-                                @click="addItemToRoom(item)">
-                                {{ item.name }}
-                            </li>
+                        <transition name="fade" mode="out-in">
+                            <ul class="page__search-results" v-show="showSearchResults">
+                                <li class="page__search-results-item"
+                                    v-for="item in searchResults"
+                                    :key="item.key"
+                                    @click="addItemToRoom(item)">
+                                    {{ item.name }}
+                                </li>
 
-                            <li class="page__search-results-item page__search-results-item--empty"
-                                v-if="searchResults.length === 0">
-                                Ничего не найдено
-                            </li>
-                        </ul>
+                                <li class="page__search-results-item page__search-results-item--empty"
+                                    v-if="searchResults.length === 0">
+                                    Ничего не найдено
+                                </li>
+                            </ul>
+                        </transition>
                     </form>
                 </section>
 
@@ -133,33 +128,36 @@
                     <h2 class="visually-hidden">Список предметов игроков</h2>
 
                     <ul class="page__info-players-list players" v-if="playersList && playersList.length > 0">
-                        <li class="players__item" v-for="player in playersList" :key="player.nickname">
+                        <li class="players__item" v-for="player in playersList" :key="player.nickname"
+                            v-if="player.items && player.items.length > 0">
                             <h3 class="players__item-title">{{player.nickname}}</h3>
 
                             <ul class="players__item-list weapon">
-                                <li class="weapon__item" v-for="item in player.items" :key="item.id">
+                                <li class="weapon__item" v-for="item in player.items" :key="item.key">
                                     <h4 class="weapon__item-name">
-                                        <a class="weapon__item-link" :href="item.link" target="_blank">{{item.name}}</a>
+                                        <a class="weapon__item-link" :href="item.link"
+                                           target="_blank">{{item.name}}</a>
                                     </h4>
 
                                     <p class="weapon__item-price">
                                         Цена: {{item.price}} ₽
                                     </p>
 
-                                    <div class="weapon__item-parameters" v-if="player.nickname === nickname">
+                                    <div class="weapon__item-parameters">
                                         <div class="weapon__item-count">
-                                        <button class="form__button button button--count" type="button"
-                                                @click="decreaseItemCount(item)">-
-                                        </button>
+                                            <button class="form__button button button--count" type="button"
+                                                    @click="decreaseItemCount(item)">-
+                                            </button>
 
-                                        <label class="visually-hidden" for="count">Количество:</label>
+                                            <label class="visually-hidden" for="count">Количество:</label>
 
-                                        <input class="form__input form__input--on-light-bg" type="number" name="count"
-                                               id="count" v-model="item.count" readonly>
+                                            <input class="form__input form__input--on-light-bg" type="number"
+                                                   name="count"
+                                                   id="count" v-model="item.count" readonly>
 
-                                        <button class="form__button button button--count" type="button"
-                                                @click="increaseItemCount(item)">+
-                                        </button>
+                                            <button class="form__button button button--count" type="button"
+                                                    @click="increaseItemCount(item)">+
+                                            </button>
                                         </div>
 
                                         <button class="weapon__item-button button button--default" type="button"
