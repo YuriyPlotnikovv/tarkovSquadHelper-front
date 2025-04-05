@@ -39,7 +39,10 @@
       padding: 60px 0;
     }
     @media (max-width: var.$mobile-mid-width) {
-      padding: 40px 0;
+      padding: 40px 0 50px;
+    }
+    @media (max-width: var.$mobile-max-width) {
+      padding: 30px 0 50px;
     }
   }
 
@@ -211,7 +214,7 @@
   &__footer {
     position: fixed;
     bottom: 0;
-    z-index: 2;
+    z-index: 3;
 
     color: var.$colorWhite;
 
