@@ -114,7 +114,7 @@ new Vue({
       })
         .then(response => response.json())
         .then(newData => {
-          if (newData && newData.length > 0) {
+          if (newData.items && newData.items.length > 0) {
             this.compareAndUpdateItems(newData.items);
           }
         });
