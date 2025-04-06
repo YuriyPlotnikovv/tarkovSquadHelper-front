@@ -98,7 +98,7 @@ new Vue({
         .then(response => response.json())
         .then(data => {
           if (data.items && data.items.length > 0) {
-            this.groupItemsByNickname(data.items);
+            this.playersList = this.groupItemsByNickname(data.items);
           } else {
             this.playersList = [];
           }
@@ -134,7 +134,7 @@ new Vue({
         accumulator[item.nickName].items.push(item);
         return accumulator;
       }, {});
-      this.playersList = Object.values(groupedItems);
+      return Object.values(groupedItems);
     },
     handleSearchInput() {
       clearTimeout(this.searchTimeout);
