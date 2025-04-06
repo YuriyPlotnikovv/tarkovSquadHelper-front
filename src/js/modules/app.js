@@ -90,11 +90,14 @@ new Vue({
       })
         .then(response => response.json())
         .then(data => {
-          if (data && data.length > 0) {
-            this.groupItemsByNickname(data);
+          if (data.items && data.items.length > 0) {
+            this.groupItemsByNickname(data.items);
           } else {
             this.playersList = [];
           }
+        })
+        .catch(error => {
+          console.error('Ошибка получения предметов:', error);
         });
     },
     groupItemsByNickname(items) {
