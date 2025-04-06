@@ -49,6 +49,7 @@
   &__wrapper {
     position: relative;
 
+    box-sizing: border-box;
     width: 100%;
     max-width: var.$desktop-mid-width;
     height: 100%;
@@ -161,10 +162,16 @@
     right: 0;
     left: 0;
 
+    width: 100%;
+    padding-bottom: 50px;
+
+    box-shadow: var.$boxShadowCard;
+  }
+
+  &__search-results-content {
     display: flex;
     overflow-y: auto;
     flex-direction: column;
-    width: 100%;
     max-height: 400px;
     padding: 10px;
 

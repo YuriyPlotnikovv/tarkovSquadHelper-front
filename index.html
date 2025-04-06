@@ -2,7 +2,7 @@
 <html class="page" lang="ru">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <title>Tarkov Squad Helper</title>
     <meta name="description" content="Описание">
@@ -106,19 +106,21 @@
                                placeholder="Начните вводить название предмета...">
 
                         <transition name="fade" mode="out-in">
-                            <ul class="page__search-results" v-show="showSearchResults">
-                                <li class="page__search-results-item"
-                                    v-for="item in searchResults"
-                                    :key="item.key"
-                                    @click="addItemToRoom(item)">
-                                    {{ item.name }}
-                                </li>
+                            <div class="page__search-results" v-show="showSearchResults">
+                                <ul class="page__search-results-content">
+                                    <li class="page__search-results-item"
+                                        v-for="item in searchResults"
+                                        :key="item.key"
+                                        @click="addItemToRoom(item)">
+                                        {{ item.name }}
+                                    </li>
 
-                                <li class="page__search-results-item page__search-results-item--empty"
-                                    v-if="searchResults.length === 0">
-                                    Ничего не найдено
-                                </li>
-                            </ul>
+                                    <li class="page__search-results-item page__search-results-item--empty"
+                                        v-if="searchResults.length === 0">
+                                        Ничего не найдено
+                                    </li>
+                                </ul>
+                            </div>
                         </transition>
                     </form>
                 </section>
@@ -178,10 +180,6 @@
     <div class="footer__wrapper">
         <a class="footer__info link" href="https://github.com/andreyMalyshkin/andreyMalyshkin" target="_blank"
            title="GitHub - andreyMalyshkin">
-            <svg class="footer__info-icon" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
-                <use xlink:href="/public/img/sprite.svg#icon-developer-backend"/>
-            </svg>
-
             <p class="footer__info-text">Andrey Malyshkin</p>
         </a>
 

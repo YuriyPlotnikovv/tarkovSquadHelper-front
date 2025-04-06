@@ -42,5 +42,9 @@
     width: 30px;
     height: 30px;
     fill: var.$colorWhite;
+
+    @media (max-width: var.$mobile-mid-width) {
+      display: none;
+    }
   }
 }
