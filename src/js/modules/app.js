@@ -36,10 +36,17 @@ new Vue({
         console.error('Ошибка загрузки конфигурации:', error);
       });
 
+    this.updateInterval = setInterval(() => {
+      if (this.isInRoom && !this.showNicknameForm) {
+        this.checkForUpdates();
+      }
+    }, 10000);
+
     document.addEventListener('click', this.handleClickOutside);
   },
   beforeDestroy() {
     document.removeEventListener('click', this.handleClickOutside);
+    clearInterval(this.updateInterval);
   },
   methods: {
     handleRoomEntry() {
@@ -99,6 +106,25 @@ new Vue({
         .catch(error => {
           console.error('Ошибка получения предметов:', error);
         });
+    },
+    checkForUpdates() {
+      const itemsUrl = `${this.apiBaseUrl}/getitemsFromCollection?tableName=${this.roomId}`;
+      fetch(itemsUrl, {
+        method: 'GET',
+      })
+        .then(response => response.json())
+        .then(newData => {
+          if (newData && newData.length > 0) {
+            this.compareAndUpdateItems(newData.items);
+          }
+        });
+    },
+    compareAndUpdateItems(newData) {
+      const newItems = this.groupItemsByNickname(newData);
+
+      if (JSON.stringify(this.playersList) !== JSON.stringify(newItems)) {
+        this.playersList = newItems;
+      }
     },
     groupItemsByNickname(items) {
       const groupedItems = items.reduce((accumulator, item) => {
