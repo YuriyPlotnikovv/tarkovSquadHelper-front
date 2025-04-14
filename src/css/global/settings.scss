@@ -31,11 +31,18 @@ body {
   font-family: var.$font-main;
   font-size: 14px;
   line-height: normal;
-  color: var.$colorWhite;
 
   scroll-behavior: smooth;
 
   -webkit-overflow-scrolling: touch;
+
+  &.page__body--dark-theme {
+    color: var.$colorWhite;
+  }
+
+  &.page__body--light-theme {
+    color: var.$colorBlackTwo;
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {

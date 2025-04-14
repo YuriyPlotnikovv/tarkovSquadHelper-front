@@ -12,6 +12,8 @@
     font-weight: 400;
     line-height: 1.2;
 
+    transition: all 0.4s ease-in-out;
+
     &::before {
       position: fixed;
       top: 0;
@@ -21,13 +23,21 @@
       width: 100vw;
       height: 100vh;
 
-      background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("/public/img/background.webp");
       background-repeat: no-repeat;
       background-position: center;
       background-size: cover;
 
       content: "";
     }
+
+    &.page__body--dark-theme::before {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("/public/img/background--dark-theme.webp");
+    }
+
+    &.page__body--light-theme::before {
+      background-image: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url("/public/img/background--light-theme.webp");
+    }
+
   }
 
   &__header {
@@ -35,9 +45,17 @@
 
     width: 100%;
 
-    color: var.$colorWhite;
+    .page__body--dark-theme & {
+      color: var.$colorWhite;
 
-    background-color: var.$colorBlackTwo;
+      background-color: var.$colorBlackTwo;
+    }
+
+    .page__body--light-theme & {
+      color: var.$colorBlackTwo;
+
+      background-color: var.$colorGraySeven;
+    }
   }
 
   &__main {
@@ -235,8 +253,16 @@
 
     width: 100%;
 
-    color: var.$colorWhite;
+    .page__body--dark-theme & {
+      color: var.$colorWhite;
 
-    background-color: var.$colorBlackTwo;
+      background-color: var.$colorBlackTwo;
+    }
+
+    .page__body--light-theme & {
+      color: var.$colorBlackTwo;
+
+      background-color: var.$colorGraySeven;
+    }
   }
 }

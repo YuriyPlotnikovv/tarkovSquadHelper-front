@@ -29,21 +29,25 @@
     align-items: center;
     gap: 15px;
     margin-right: auto;
+
+    transition: all 0.4s ease-in-out;
   }
 
   &__logo-image {
-    width: 150px;
-    height: 60px;
-
-    fill: var.$colorWhite;
+    width: 110px;
+    height: 50px;
 
     @media (max-width: var.$tablet-max-width) {
-      width: 120px;
-      height: 50px;
-    }
-    @media (max-width: var.$mobile-mid-width) {
       width: 90px;
       height: 40px;
+    }
+
+    .page__body--dark-theme & {
+      fill: var.$colorWhite;
+    }
+
+    .page__body--light-theme & {
+      fill: var.$colorBlackTwo;
     }
   }
 
@@ -56,6 +60,106 @@
     }
     @media (max-width: var.$mobile-mid-width) {
       font-size: 18px;
+    }
+  }
+
+  .header__button-theme {
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 50px;
+  }
+
+  .header__theme-switcher {
+    position: absolute;
+    display: none;
+
+    &:checked + .header__theme-label {
+      .page__body--dark-theme & {
+        background-color: var.$colorWhite;
+      }
+
+      .page__body--light-theme & {
+        background-color: var.$colorBlackTwo;
+      }
+
+      &::before {
+        box-shadow: inset 8px 0 0 0 var.$colorBlackTwo;
+
+        transform: translateX(0);
+
+        .page__body--dark-theme & {
+          background-color: var.$colorWhite;
+        }
+
+        .page__body--light-theme & {
+          background-color: var.$colorBlackTwo;
+        }
+      }
+    }
+  }
+
+  .header__theme-label {
+    position: absolute;
+    overflow: hidden;
+
+    width: 100%;
+    height: 30px;
+
+    border-radius: 50px;
+
+    cursor: pointer;
+
+    transition: all 0.4s ease-in-out;
+
+    &::before {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+
+      width: 20px;
+      height: 20px;
+
+      border-radius: 50%;
+      box-shadow: none;
+
+      content: "";
+
+      transform: translateX(20px);
+      transition: all 0.4s ease-in-out;
+
+      .page__body--dark-theme & {
+        background-color: var.$colorBlackTwo;
+      }
+
+      .page__body--light-theme & {
+
+        background-color: var.$colorWhite;
+      }
+    }
+
+    .page__body--dark-theme & {
+      background-color: var.$colorWhite;
+    }
+
+    .page__body--light-theme & {
+      background-color: var.$colorBlackTwo;
+    }
+  }
+
+  &__button-logout {
+    font-size: 14px;
+    text-transform: uppercase;
+
+    .page__body--dark-theme & {
+      color: var.$colorWhite;
+    }
+
+    .page__body--light-theme & {
+      color: var.$colorBlackTwo;
     }
   }
 }

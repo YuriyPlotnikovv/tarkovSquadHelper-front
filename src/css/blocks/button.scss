@@ -51,9 +51,20 @@
 
     transition: all 0.4s ease-in-out;
 
-    &:hover, &:active {
-      background-color: transparent;
-      border-color: var.$colorWhite;
+    .page__body--dark-theme & {
+      &:hover, &:active {
+        background-color: transparent;
+        border-color: var.$colorWhite;
+      }
+    }
+
+    .page__body--light-theme & {
+      &:hover, &:active {
+        color: var.$colorBlackThree;
+
+        background-color: transparent;
+        border-color: var.$colorBlackThree;
+      }
     }
   }
 
