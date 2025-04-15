@@ -10,6 +10,12 @@ document.addEventListener('DOMContentLoaded', function () {
   const ITEM_OPEN_CLASS = 'players__item--open';
   const SEARCH_RESULTS_CLASS = 'page__search-results';
 
+  Vue.directive('$search', {
+    bind: function (el, binding, vnode) {
+      el.oninput = () => (vnode.context[binding.expression] = el.value);
+    }
+  });
+
   new Vue({
     el: '#app',
     data: {
