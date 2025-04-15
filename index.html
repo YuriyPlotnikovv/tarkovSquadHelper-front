@@ -117,8 +117,8 @@
                         <form class="page__search-form form" @submit.prevent="submitSearch">
                             <label class="form__label" for="search">Поиск предметов:</label>
 
-                            <input class="form__input" type="text" name="search" id="search" v-$search="searchQuery"
-                                   @input="handleSearchInput"
+                            <input class="form__input" type="text" name="search" id="search" :value="searchQuery"
+                                   @input="evt => handleSearchInput(evt.target.value)"
                                    placeholder="Начните вводить название предмета...">
 
                             <transition name="fade" mode="out-in">
