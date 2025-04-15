@@ -117,7 +117,7 @@
                             <label class="form__label" for="search">Поиск предметов:</label>
 
                             <input class="form__input" type="text" name="search" id="search" v-model="searchQuery"
-                                   @input="handleSearchInput"
+                                   @keyup="handleSearchInput"
                                    placeholder="Начните вводить название предмета...">
 
                             <transition name="fade" mode="out-in">
@@ -143,6 +143,10 @@
                     <!-- Список предметов -->
                     <section class="page__info">
                         <h2 class="visually-hidden">Список предметов игроков</h2>
+
+                        <p class="page__text" v-if="playersList.length === 0">
+                            Предметов в комнате нет, найдите предметы через поиск и добавьте в свой список
+                        </p>
 
                         <ul class="page__info-players-list players" v-if="playersList && playersList.length > 0">
                             <li class="players__item" v-for="player in playersList" :key="player.nickname"
