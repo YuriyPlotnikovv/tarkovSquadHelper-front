@@ -1,23 +1,34 @@
 document.addEventListener('DOMContentLoaded', function () {
+  const UPDATE_INTERVAL = 10000;
+  const SEARCH_DELAY = 300;
+  const COOKIE_EXPIRATION_DAYS = 14;
+  const DEFAULT_INVITE_BUTTON_TEXT = 'Скопировать ссылку на комнату';
+  const SUCCESS_INVITE_BUTTON_TEXT = 'Ссылка успешно скопирована!';
+
+  const DARK_THEME_CLASS = 'page__body--dark-theme';
+  const LIGHT_THEME_CLASS = 'page__body--light-theme';
+  const ITEM_OPEN_CLASS = 'players__item--open';
+  const SEARCH_RESULTS_CLASS = 'page__search-results';
+
   new Vue({
     el: '#app',
     data: {
+      apiBaseUrl: '',
+      isDarkTheme: getCookie('theme') !== 'light',
       roomIdInput: '',
+      roomId: getCookie('roomId') || '',
+      nickname: getCookie('nickname') || '',
+      isInRoom: !!getCookie('roomId'),
+      showNicknameForm: !getCookie('nickname'),
+      playersList: [],
       searchQuery: '',
       searchResults: [],
       showSearchResults: false,
-      playersList: [],
-      nickname: getCookie('nickname') || '',
-      roomId: getCookie('roomId') || '',
-      showNicknameForm: !getCookie('nickname'),
-      isInRoom: !!getCookie('roomId'),
+      searchTimeout: null,
       isSubmitted: false,
-      isDarkTheme: getCookie('theme') !== 'light',
       hasError: false,
       currentState: '',
-      apiBaseUrl: '',
-      searchTimeout: null,
-      inviteButtonText: 'Скопировать ссылку на комнату'
+      inviteButtonText: DEFAULT_INVITE_BUTTON_TEXT
     },
     created() {
       fetch('/config.json')
@@ -42,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (this.isInRoom && !this.showNicknameForm) {
           this.checkForUpdates();
         }
-      }, 10000);
+      }, UPDATE_INTERVAL);
 
       this.changeTheme();
 
@@ -80,17 +91,18 @@ document.addEventListener('DOMContentLoaded', function () {
       },
       enterRoom(roomId) {
         this.roomId = roomId;
-        setCookie('roomId', roomId, 14);
+        setCookie('roomId', roomId, COOKIE_EXPIRATION_DAYS);
         this.isInRoom = true;
+
         if (this.nickname) {
-          setCookie('nickname', this.nickname, 14);
+          setCookie('nickname', this.nickname, COOKIE_EXPIRATION_DAYS);
           this.showNicknameForm = false;
           this.fetchItems();
         }
       },
       submitNickname() {
         if (this.nickname.trim() !== '') {
-          setCookie('nickname', this.nickname, 14);
+          setCookie('nickname', this.nickname, COOKIE_EXPIRATION_DAYS);
           this.showNicknameForm = false;
           this.fetchItems();
         }
@@ -107,10 +119,24 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
               this.playersList = [];
             }
+
+            this.$nextTick(() => {
+              this.restoreListStates();
+            });
           })
           .catch(error => {
             console.error('Ошибка получения предметов:', error);
           });
+      },
+      groupItemsByNickname(items) {
+        const groupedItems = items.reduce((accumulator, item) => {
+          if (!accumulator[item.nickName]) {
+            accumulator[item.nickName] = {nickname: item.nickName, items: []};
+          }
+          accumulator[item.nickName].items.push(item);
+          return accumulator;
+        }, {});
+        return Object.values(groupedItems);
       },
       checkForUpdates() {
         const itemsUrl = `${this.apiBaseUrl}/getitemsFromCollection?tableName=${this.roomId}`;
@@ -131,21 +157,11 @@ document.addEventListener('DOMContentLoaded', function () {
           this.playersList = newItems;
         }
       },
-      groupItemsByNickname(items) {
-        const groupedItems = items.reduce((accumulator, item) => {
-          if (!accumulator[item.nickName]) {
-            accumulator[item.nickName] = {nickname: item.nickName, items: []};
-          }
-          accumulator[item.nickName].items.push(item);
-          return accumulator;
-        }, {});
-        return Object.values(groupedItems);
-      },
       handleSearchInput() {
         clearTimeout(this.searchTimeout);
         this.searchTimeout = setTimeout(() => {
           this.submitSearch();
-        }, 300);
+        }, SEARCH_DELAY);
       },
       submitSearch() {
         if (this.searchQuery.length > 2) {
@@ -238,7 +254,7 @@ document.addEventListener('DOMContentLoaded', function () {
           });
       },
       handleClickOutside(event) {
-        const searchResultsElement = this.$el.querySelector('.page__search-results');
+        const searchResultsElement = this.$el.querySelector(`.${SEARCH_RESULTS_CLASS}`);
         if (searchResultsElement && !searchResultsElement.contains(event.target)) {
           this.showSearchResults = false;
         }
@@ -248,9 +264,9 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(inviteLink);
         navigator.clipboard.writeText(inviteLink)
           .then(() => {
-            this.inviteButtonText = 'Ссылка успешно скопирована!';
+            this.inviteButtonText = SUCCESS_INVITE_BUTTON_TEXT;
             setTimeout(() => {
-              this.inviteButtonText = 'Скопировать ссылку на комнату';
+              this.inviteButtonText = DEFAULT_INVITE_BUTTON_TEXT;
             }, 2000);
           })
           .catch(err => {
@@ -262,29 +278,44 @@ document.addEventListener('DOMContentLoaded', function () {
           deleteCookie('nickname');
           deleteCookie('roomId');
           deleteCookie('theme');
-          window.location.reload();
+
+          window.location.href = window.location.origin + window.location.pathname;
         }
       },
       changeTheme() {
         const newTheme = this.isDarkTheme ? 'dark' : 'light';
-        setCookie('theme', newTheme, 14);
+        setCookie('theme', newTheme, COOKIE_EXPIRATION_DAYS);
         this.applyTheme(newTheme);
       },
       applyTheme(theme) {
         if (theme === 'dark') {
-          document.body.classList.add('page__body--dark-theme');
-          document.body.classList.remove('page__body--light-theme');
+          document.body.classList.add(DARK_THEME_CLASS);
+          document.body.classList.remove(LIGHT_THEME_CLASS);
         } else {
-          document.body.classList.add('page__body--light-theme');
-          document.body.classList.remove('page__body--dark-theme');
+          document.body.classList.add(LIGHT_THEME_CLASS);
+          document.body.classList.remove(DARK_THEME_CLASS);
         }
       },
       toggleList(evt) {
         const currentItem = evt.currentTarget;
+        const nickname = currentItem.querySelector('.players__item-title').textContent;
 
         if (evt.target.tagName.toLowerCase() === 'h3' || evt.target === currentItem) {
-          currentItem.classList.toggle('players__item--open');
+          currentItem.classList.toggle(ITEM_OPEN_CLASS);
+
+          const isOpen = currentItem.classList.contains(ITEM_OPEN_CLASS);
+          setCookie(`listState_${nickname}`, isOpen, COOKIE_EXPIRATION_DAYS);
         }
+      },
+      restoreListStates() {
+        this.playersList.forEach(player => {
+          const isOpen = getCookie(`listState_${player.nickname}`) === 'true';
+          const listItem = this.$el.querySelector(`[data-nickname="${player.nickname}"]`);
+
+          if (listItem && isOpen) {
+            listItem.classList.add(ITEM_OPEN_CLASS);
+          }
+        });
       }
     }
   });

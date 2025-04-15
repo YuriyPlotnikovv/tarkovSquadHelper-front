@@ -146,8 +146,9 @@
 
                         <ul class="page__info-players-list players" v-if="playersList && playersList.length > 0">
                             <li class="players__item" v-for="player in playersList" :key="player.nickname"
+                                :data-nickname="player.nickname"
                                 v-if="player.items && player.items.length > 0"
-                            @click="toggleList">
+                                @click="toggleList">
                                 <h3 class="players__item-title">{{player.nickname}}</h3>
 
                                 <ul class="players__item-list weapon">
