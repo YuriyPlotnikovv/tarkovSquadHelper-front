@@ -17,6 +17,11 @@
     @media (max-width: var.$tablet-max-width) {
       flex-direction: column;
     }
+    @media (max-width: var.$mobile-max-width) {
+      padding: 15px;
+
+      border-radius: 10px;
+    }
   }
 
   &__item-name {

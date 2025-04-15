@@ -279,6 +279,13 @@ document.addEventListener('DOMContentLoaded', function () {
           document.body.classList.remove('page__body--dark-theme');
         }
       },
+      toggleList(evt) {
+        const currentItem = evt.currentTarget;
+
+        if (evt.target.tagName.toLowerCase() === 'h3' || evt.target === currentItem) {
+          currentItem.classList.toggle('players__item--open');
+        }
+      }
     }
   });
 });
