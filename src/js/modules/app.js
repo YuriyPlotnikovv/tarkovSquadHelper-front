@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       },
       submitNickname() {
-        if (this.nickname.trim() !== '') {
+        if (this.nickname !== '') {
           setCookie('nickname', this.nickname, COOKIE_EXPIRATION_DAYS);
           this.showNicknameForm = false;
           this.fetchItems();

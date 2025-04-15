@@ -68,7 +68,8 @@
                             <label class="form__label" for="login">Комната:</label>
 
                             <input class="form__input form__input--enter" type="text" name="login" id="login"
-                                   v-model="roomIdInput"
+                                   v-model.trim="roomIdInput"
+                                   autocomplete="off"
                                    placeholder="Идентификатор комнаты...">
 
                             <button class="form__button button button--on-dark-bg" type="submit">Войти</button>
@@ -90,7 +91,7 @@
 
                             <input class="form__input form__input--enter" type="text" name="nickname"
                                    id="nickname"
-                                   v-model="nickname" placeholder="Введите ваш ник в игре">
+                                   v-model.trim="nickname" placeholder="Введите ваш ник в игре">
 
                             <button class="form__button button button--on-dark-bg" type="submit">Подтвердить</button>
                         </form>
@@ -116,8 +117,9 @@
                         <form class="page__search-form form" @submit.prevent="submitSearch">
                             <label class="form__label" for="search">Поиск предметов:</label>
 
-                            <input class="form__input" type="text" name="search" id="search" v-model="searchQuery"
-                                   @keyup="handleSearchInput"
+                            <input class="form__input" type="text" name="search" id="search" v-model.trim="searchQuery"
+                                   @input="handleSearchInput"
+                                   autocomplete="off"
                                    placeholder="Начните вводить название предмета...">
 
                             <transition name="fade" mode="out-in">
