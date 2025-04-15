@@ -59,7 +59,7 @@
       font-size: 22px;
     }
     @media (max-width: var.$mobile-mid-width) {
-      font-size: 18px;
+      display: none;
     }
   }
 
@@ -71,6 +71,7 @@
     align-items: center;
 
     width: 50px;
+    height: 30px;
   }
 
   .header__theme-switcher {
