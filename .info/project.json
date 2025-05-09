@@ -9,12 +9,6 @@
     "backend": "https://github.com/andreyMalyshkin/TarkovSquadHelper",
     "features": [
         {
-            "name-ru": "Сложность",
-            "name-en": "Difficulty",
-            "description-ru": "Hard",
-            "description-en": "Hard"
-        },
-        {
             "name-ru": "Страницы",
             "name-en": "Pages",
             "description-ru": [
