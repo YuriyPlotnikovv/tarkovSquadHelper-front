@@ -1,0 +1,62 @@
+{
+    "title-ru": "Tarkov Squad Helper",
+    "title-en": "Tarkov Squad Helper",
+    "textFirst-ru": "Совместный проект на JS",
+    "textFirst-en": "A collaborative project in JS",
+    "textSecond-ru": "Приложение предоставляет дополнительную функциональность для игроков Tarkov: создание и управление комнатами с редактируемыми списками предметов для каждого участника.",
+    "textSecond-en": "The application provides additional functionality for Tarkov players: creating and managing rooms with editable item lists for each participant.",
+    "deploy": "https://tarkov-squad-helper.netlify.app",
+    "backend": "https://github.com/andreyMalyshkin/TarkovSquadHelper",
+    "features": [
+        {
+            "name-ru": "Сложность",
+            "name-en": "Difficulty",
+            "description-ru": "Hard",
+            "description-en": "Hard"
+        },
+        {
+            "name-ru": "Страницы",
+            "name-en": "Pages",
+            "description-ru": [
+                "Главная"
+            ],
+            "description-en": [
+                "Main"
+            ]
+        },
+        {
+            "name-ru": "Дополнительно",
+            "name-en": "Additional",
+            "description-ru": [
+                "Создание и вход в комнату",
+                "Поиск и добавление предметов",
+                "Управление списком предметов",
+                "Смена темы интерфейса",
+                "До 5ти игроков в комнате",
+                "Приглашение игрока по ссылке"
+            ],
+            "description-en": [
+                "Create and enter rooms",
+                "Search and add items",
+                "Manage item lists",
+                "Switch interface theme",
+                "Up to 5 players per room",
+                "Invite players via link"
+            ]
+        },
+        {
+            "name-ru": "Не реализовано",
+            "name-en": "Not Implemented",
+            "description-ru": [
+                "Общий список комнат",
+                "Английский язык интерфейса",
+                "Личный кабинет игрока"
+            ],
+            "description-en": [
+                "Global room list",
+                "English interface language",
+                "Player personal account"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,65 @@
+name: Deploy tarkov-squad-helper to Beget via FTP
+
+on:
+    push:
+        branches: [ "main" ]
+        paths-ignore:
+            - '.info/**'
+            - '.github/workflows/generateReadme.yml'
+            - 'README.md'
+    pull_request:
+        branches: [ "main" ]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 23
+
+            - name: Cache Node.js modules
+              uses: actions/cache@v4
+              with:
+                  path: ~/.npm
+                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+                  restore-keys: |
+                      ${{ runner.os }}-node-
+
+            - name: Install dependencies
+              run: npm install
+
+            - name: Build project
+              run: npm run build
+
+            - name: Generate Config
+              env:
+                  API_URL: ${{ secrets.API_URL }}
+                  GITHUB_WORKSPACE: ${{ github.workspace }}
+              run: node .github/scripts/generateConfig.js
+
+            - name: SFTP Deploy
+              uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+              with:
+                  server: ${{ secrets.SFTP_SERVER }}
+                  username: ${{ secrets.SFTP_USER }}
+                  password: ${{ secrets.SFTP_PASSWORD }}
+                  protocol: ftps
+                  local-dir: ./
+                  exclude: |
+                      **/.git*
+                      **/.github/**
+                      **/.info/**
+                      **/node_modules/**
+                      **/src/**
+                      **/.editorconfig
+                      **/package.json
+                      **/package-lock.json
+                      **/gulpfile.js
+                      **/README.md
+                      **/LICENSE

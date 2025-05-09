@@ -1,0 +1,44 @@
+name: Generate README
+
+on:
+    push:
+        paths:
+            - '.info/poster.webp'
+            - '.info/project.json'
+            - '.info/README-template.md'
+            - '.github/scripts/generateReadme.js'
+            - '.github/workflows/generateReadme.yml'
+
+jobs:
+    generate-readme:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 23
+
+            - name: Cache Node.js modules
+              uses: actions/cache@v4
+              with:
+                  path: ~/.npm
+                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+                  restore-keys: |
+                      ${{ runner.os }}-node-
+
+            - name: Generate README.md
+              env:
+                  GITHUB_WORKSPACE: ${{ github.workspace }}
+              run: node .github/scripts/generateReadme.js
+
+            - name: Commit and push changes
+              uses: stefanzweifel/git-auto-commit-action@v5
+              with:
+                  commit_message: "Generate README.md from template"
+                  file_pattern: README.md
+                  commit_user_name: "GitHub Actions Bot"
+                  commit_user_email: "actions@github.com"
