@@ -26,7 +26,7 @@ The application provides additional functionality for Tarkov players: creating a
 
 - Main
 
-#### Additional:
+#### Functionality:
 
 - Create and enter rooms
 - Search and add items
@@ -112,7 +112,7 @@ Website: https://yuriyplotnikovv.ru
 
 - Главная
 
-#### Дополнительно:
+#### Функциональность:
 
 - Создание и вход в комнату
 - Поиск и добавление предметов
