@@ -19,8 +19,8 @@
             ]
         },
         {
-            "name-ru": "Дополнительно",
-            "name-en": "Additional",
+            "name-ru": "Функциональность",
+            "name-en": "Functionality",
             "description-ru": [
                 "Создание и вход в комнату",
                 "Поиск и добавление предметов",
