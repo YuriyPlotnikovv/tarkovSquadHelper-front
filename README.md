@@ -1,29 +1,141 @@
 # Tarkov Squad Helper
 
-Приложение предоставляет функциональность для создания и управления комнатами с редактируемыми списками предметов для каждого участника.
+<img src=".info/poster.webp" alt="Poster" width="600" />
 
-## Деплой проекта
+[🇬🇧 English](#english) | [🇷🇺 Русский](#русский)
 
-Посетите развернутую версию проекта по адресу: [Tarkov Squad Helper](https://tarkov-squad-helper.netlify.app/)
+---
 
-## Backend проекта
+## English
 
-Репозиторий с бэком проекта: [GitHub](https://github.com/andreyMalyshkin/TarkovSquadHelper)
+### Tarkov Squad Helper
 
-## Содержание
+Project: https://tarkov-squad-helper.netlify.app
 
-- [Функционал](#функционал)
-- [API Методы](#api-методы)
-- [Методы в приложении](#методы-в-приложении)
+Backend: https://github.com/andreyMalyshkin/TarkovSquadHelper
 
-### Функционал
+A collaborative project in JS
 
-- **Создание и вход в комнату:** Введите ID комнаты или оставьте поле пустым, чтобы создать новую комнату. Можно также войти в комнату, используя ссылку.
-- **Управление никнеймом:** Введите никнейм при первом запуске для участия в комнате.
-- **Поиск и добавление предметов:** Используйте функции поиска для нахождения предметов и добавления их в свой список.
-- **Управление списком предметов:** Увеличивайте или уменьшайте количество предметов в своем списке. Удаляйте предметы из списка.
-- **Копирование ссылки на комнату:** Копируйте ссылку на текущую комнату, чтобы поделиться ею с другими участниками.
-- **Смена темы интерфейса:** Управляйте темой отображения сайта - светлая или темная.
+The application provides additional functionality for Tarkov players: creating and managing rooms with editable item lists for each participant.
+
+---
+
+### About the project
+
+#### Difficulty:
+
+- Hard
+
+#### Pages:
+
+- Main
+
+#### Additional:
+
+- Create and enter rooms
+- Search and add items
+- Manage item lists
+- Switch interface theme
+- Up to 5 players per room
+- Invite players via link
+
+#### Not Implemented:
+
+- Global room list
+- English interface language
+- Player personal account
+
+---
+
+### API Methods
+
+- **Create room:** `POST /createCollection`
+- **Get items from room:** `GET /getitemsFromCollection?tableName={roomId}`
+- **Search items:** `GET /search?q={query}`
+- **Increase item count:** `POST /increaseItemCount`
+- **Decrease item count:** `POST /decreaseItemCount`
+- **Delete item:** `DELETE /deleteItemFromCollection`
+
+---
+
+### Application Methods
+
+- **handleRoomEntry:** Handles entering a room by ID or creates a new room.
+- **createRoom:** Creates a new room and automatically enters it.
+- **enterRoom:** Enters a room by ID and saves it in cookies.
+- **submitNickname:** Saves the user's nickname and updates the item list.
+- **fetchItems:** Retrieves the list of items from the room.
+- **checkForUpdates:** Checks for updates in the item list.
+- **compareAndUpdateItems:** Compares and updates the item list if there are changes.
+- **groupItemsByNickname:** Groups items by user nickname.
+- **handleSearchInput:** Handles input in the search field with a delay.
+- **submitSearch:** Performs a search for items by the entered query.
+- **addItemToRoom:** Adds the selected item to the current room.
+- **increaseItemCount:** Increases the quantity of the specified item.
+- **decreaseItemCount:** Decreases the quantity of the specified item.
+- **removeItemFromRoom:** Removes an item from the room.
+- **handleClickOutside:** Hides search results when clicking outside the list.
+- **copyInviteLink:** Copies the current room link to the clipboard.
+- **logout:** Removes user data from cookies and refreshes the page.
+- **changeTheme:** Changes the app theme between light and dark.
+- **applyTheme:** Applies the selected theme to the interface.
+- **toggleList:** Manages opening and closing the participant list.
+
+---
+
+### License
+
+This project is licensed under the [GNU Affero General Public License v3 (AGPLv3)](https://www.gnu.org/licenses/agpl-3.0.html).
+
+---
+
+### Contacts
+
+Author: Yuriy Plotnikov  
+Website: https://yuriyplotnikovv.ru
+
+---
+
+## Русский
+
+### Tarkov Squad Helper
+
+Проект: https://tarkov-squad-helper.netlify.app
+
+Бэкенд: https://github.com/andreyMalyshkin/TarkovSquadHelper
+
+Совместный проект на JS
+
+Приложение предоставляет дополнительную функциональность для игроков Tarkov: создание и управление комнатами с редактируемыми списками предметов для каждого участника.
+
+---
+
+### О проекте
+
+#### Сложность:
+
+- Hard
+
+#### Страницы:
+
+- Главная
+
+#### Дополнительно:
+
+- Создание и вход в комнату
+- Поиск и добавление предметов
+- Управление списком предметов
+- Смена темы интерфейса
+- До 5ти игроков в комнате
+- Приглашение игрока по ссылке
+
+#### Не реализовано:
+
+- Общий список комнат
+- Английский язык интерфейса
+- Личный кабинет игрока
+
+---
 
 ### API Методы
 
@@ -33,6 +145,8 @@
 - **Увеличение количества предметов:** `POST /increaseItemCount`
 - **Уменьшение количества предметов:** `POST /decreaseItemCount`
 - **Удаление предмета:** `DELETE /deleteItemFromCollection`
+
+---
 
 ### Методы в приложении
 
@@ -56,3 +170,16 @@
 - **changeTheme:** Изменяет тему приложения между светлой и темной.
 - **applyTheme:** Применяет выбранную тему к интерфейсу.
 - **toggleList:** Управляет открытием и закрытием списка участников.
+
+---
+
+### Лицензия
+
+Проект распространяется под лицензией [GNU Affero General Public License v3 (AGPLv3)](https://www.gnu.org/licenses/agpl-3.0.html).
+
+---
+
+### Контакты
+
+Автор: Yuriy Plotnikov  
+Сайт: https://yuriyplotnikovv.ru  
