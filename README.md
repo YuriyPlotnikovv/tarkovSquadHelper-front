@@ -22,10 +22,6 @@ The application provides additional functionality for Tarkov players: creating a
 
 ### About the project
 
-#### Difficulty:
-
-- Hard
-
 #### Pages:
 
 - Main
@@ -111,10 +107,6 @@ Website: https://yuriyplotnikovv.ru
 ---
 
 ### О проекте
-
-#### Сложность:
-
-- Hard
 
 #### Страницы:
 
