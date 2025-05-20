@@ -22,6 +22,10 @@ The application provides additional functionality for Tarkov players: creating a
 
 ### About the project
 
+#### Development date:
+
+- In progress
+
 #### Pages:
 
 - Main
@@ -107,6 +111,10 @@ Website: https://yuriyplotnikovv.ru
 ---
 
 ### О проекте
+
+#### Дата разработки:
+
+- В процессе
 
 #### Страницы:
 
