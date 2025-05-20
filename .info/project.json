@@ -10,6 +10,16 @@
     "backend": "https://github.com/andreyMalyshkin/TarkovSquadHelper",
     "features": [
         {
+            "name-ru": "Дата разработки",
+            "name-en": "Development date",
+            "description-ru": [
+                "В процессе"
+            ],
+            "description-en": [
+                "In progress"
+            ]
+        },
+        {
             "name-ru": "Страницы",
             "name-en": "Pages",
             "description-ru": [
@@ -52,6 +62,33 @@
                 "English interface language",
                 "Player personal account"
             ]
+        }
+    ],
+    "technologies": [
+        {
+            "name": "HTML",
+            "icon": "icon-html",
+            "link": "https://html.spec.whatwg.org/multipage/"
+        },
+        {
+            "name": "SCSS",
+            "icon": "icon-scss",
+            "link": "https://sass-scss.ru/"
+        },
+        {
+            "name": "JavaScript",
+            "icon": "icon-js",
+            "link": "https://ecma-international.org/publications-and-standards/standards/ecma-262/"
+        },
+        {
+            "name": "Gulp",
+            "icon": "icon-gulp",
+            "link": "https://gulpjs.com/"
+        },
+        {
+            "name": "Vue",
+            "icon": "icon-vue",
+            "link": "https://vuejs.org/"
         }
     ]
 }
